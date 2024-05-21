@@ -1,0 +1,21 @@
+
+<%- include("partials/header"); -%>
+    <div class="jounal-head">
+      <h1>Home</h1>
+      <p style="font-weight: 700;">User : <%= userName %> </p>
+    </div>
+    <p> <%= startingContent %> </p>
+    <a class="btn btn-dark logout-btn btn-lg" href="/logout" role="button">Log out</a>
+    <h1><%= noPost %></h1>
+
+  <%  posts.forEach(function(post){ %>
+
+    <h1><%=post.name%></h1>
+    <p>
+    <%=post.body.substring(0, 100) + " ..."%>
+    <a href="/posts/<%=post.name%>">Read More</a>
+    </p>
+    <% }) %>
+
+
+<%- include("partials/footer"); -%>

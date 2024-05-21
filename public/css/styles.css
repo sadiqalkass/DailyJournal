@@ -1,0 +1,77 @@
+html {
+  min-height: 100%;
+  position: relative;
+}
+
+.container-fluid {
+    padding-top: 70px;
+    padding-bottom: 70px;
+}
+.navbar {
+    padding-top: 15px;
+    padding-bottom: 15px;
+    border: 0;
+    border-radius: 0;
+    margin-bottom: 0;
+    font-size: 12px;
+    letter-spacing: 5px;
+}
+.navbar-nav  li a:hover {
+    color: #1abc9c !important;
+}
+.del-button{
+  background-color: red;
+  color: whitesmoke;
+  border-radius: 10px;
+  padding: 1rem;
+}
+.del-button:hover{
+  background-color: rgba(255, 0, 0, 0.742);
+  color: ghostwhite;
+}
+.py-2{
+  margin: auto;
+  margin-top: 1rem;
+}
+.jumbotron{
+  background-color: #fff;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+}
+.home-container{
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+.home-container .home-p{
+  font-size: 16px;
+}
+.logout-btn{
+  padding: 0;
+  margin: 0;
+}
+.jounal-head{
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  align-items: center;
+}
+.footer-padding {
+	padding-bottom: 60px;
+}
+
+.footer {
+	position: absolute;
+	text-align: center;
+	bottom: 0;
+	width: 100%;
+	height: 60px;
+	background-color: #1abc9c;
+}
+
+.footer p {
+	margin-top: 25px;
+	font-size: 12px;
+  color: #fff;
+}
