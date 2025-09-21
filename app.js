@@ -22,7 +22,7 @@ app.use(express.static("public"));
 
 //This is the order of code must be followed
 app.use(session({
-  secret:"Our little secret.",
+  secret: process.env.SECRET,
   resave: false,
   saveUninitialized: false
 }))
@@ -30,7 +30,8 @@ app.use(session({
 app.use(passport.initialize())
 app.use(passport.session())
 
-mongoose.connect("mongodb://127.0.0.1:27017/dailyJonalDB")
+//mongoose.connect("mongodb://127.0.0.1:27017/dailyJonalDB")
+mongoose.connect(`${process.env.MONGODB_URL}/dailyJonalDB`)
 
 const postSchema ={
   name: String,
@@ -39,7 +40,8 @@ const postSchema ={
 const Post = mongoose.model('post', postSchema)
 
 const userSchema = new mongoose.Schema({
-  user: String,
+  name: String,
+  username: String,
   password: String,
   posts: [postSchema]
 })
@@ -72,6 +74,7 @@ passport.deserializeUser(function(user, cb) {
 app.get('/', (req,res)=>{
   res.render('home')
 })
+
 app.get("/journal", function(req, res){
   if (req.isAuthenticated()) {
     const getPost = async() =>{
@@ -81,14 +84,14 @@ app.get("/journal", function(req, res){
           startingContent: homeStartingContent,
           posts: [],
           noPost: 'No journal Published yet',
-          userName: fudUser.username
+          userName: _.capitalize(fudUser.name)
           });
       } else {
           res.render("journal", {
             startingContent: homeStartingContent,
             posts: fudUser.posts,
             noPost: null,
-            userName: fudUser.username
+            userName: _.capitalize(fudUser.name)
             });
       }
     }
@@ -98,7 +101,6 @@ app.get("/journal", function(req, res){
   }
 });
 
-
 app.get("/contact", function(req, res){
   res.render("contact", {contactContent: contactContent});
 });
@@ -106,17 +108,20 @@ app.get("/contact", function(req, res){
 app.get("/compose", function(req, res){
   res.render("compose");
 });
+
 app.get("/errPage", function(req, res){
   res.render("errPage")
 });
+
 app.get('/login', (req,res)=>{
   res.render('login')
 })
+
 app.get('/signup', (req,res)=>{
   res.render('signup')
 })
+
 app.post("/compose", function(req, res){
-    const wrtTitle = req.body.postTitle
     async function authPost() {
       const foundUser = await User.findById(req.user.id)
       const newPost ={
@@ -129,6 +134,7 @@ app.post("/compose", function(req, res){
     }
     authPost()
 });
+
 app.post("/delete", function(req,res){
   const delPostId = req.body.postId
   const userId = req.user.id
@@ -139,6 +145,7 @@ app.post("/delete", function(req,res){
   }
   deletePost()
 })
+
 app.get("/posts/:postName", function(req, res){
   const reqPost = _.capitalize(req.params.postName)
   async function getPost(){
@@ -154,7 +161,26 @@ app.get("/posts/:postName", function(req, res){
   }
   getPost()
 });
+
+app.post('/signup', (req,res)=>{
+  const newUser =new User({
+    name: req.body.name,
+    username: req.body.username
+  })
+  User.register(newUser, req.body.password, (err,user)=>{
+     if (err) {
+       console.log(err)
+       res.redirect('/signup')   
+     } else {
+       passport.authenticate("local")(req, res, function(){
+         res.redirect('/journal')
+       })
+     }
+   })
+ })
+
 app.post('/login', (req,res)=>{
+  console.log(req.body.username);
   const user = new User({
     username: req.body.username,
     password: req.body.password
@@ -171,18 +197,6 @@ app.post('/login', (req,res)=>{
   })
 })
 
-app.post('/signup', (req,res)=>{
-  User.register({username: req.body.username}, req.body.password, (err,user)=>{
-    if (err) {
-      console.log(err)
-      res.redirect('/')
-    } else {
-      passport.authenticate("local")(req, res, function(){
-        res.redirect('/journal')
-      })
-    }
-  })
-})
 
 app.get('/logout', (req, res)=>{
   req.logout((err)=>{

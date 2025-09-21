@@ -1,10 +1,18 @@
 
 <%- include("partials/header"); -%>
     <div class="jounal-head">
-      <h1>Home</h1>
+      <h1>Welcome to DailyJournal</h1>
       <p style="font-weight: 700;">User : <%= userName %> </p>
     </div>
-    <p> <%= startingContent %> </p>
+    <div class="jounal-content"> 
+      <p>Welcome <%= userName.split(' ')[0] %>  to your Daily Journal! Here, you can:</p>
+      <ul>
+        <li>Reflect on your day</li>
+        <li>Track your goals</li>
+        <li>Organize your thoughts</li>
+      </ul>
+      <p>Start writing your first entry <a href="/compose">here</a></p>
+    </div>
     <a class="btn btn-dark logout-btn btn-lg" href="/logout" role="button">Log out</a>
     <h1><%= noPost %></h1>
 
