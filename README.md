@@ -90,7 +90,7 @@ dailyJournal combines journaling and scheduling into one platform to enhance pro
 
 1. Clone the repository:
    ```bash
-   git clone <repo-url>
+   git clone https://github.com/sadiqalkass/DailyJournal.git
    cd dailyJournal
 2. npm install
 3.  Create a .env file in the root directory and add:
