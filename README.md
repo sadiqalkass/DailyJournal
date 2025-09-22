@@ -57,7 +57,7 @@ dailyJournal simplifies journaling and planning, encouraging self-discipline, im
 ## ⚙️ Methodology
 
 - **Journal Entries** – Backend with Node.js, secure storage with MongoDB/MySQL, authentication for privacy.  
-- **Task Scheduling** – Frontend with HTML, CSS, JavaScript, and EJS for interactivity.  
+- **Task Scheduling** – Frontend with HTML, CSS, Bootstarp,  JavaScript, and EJS for interactivity.  
 - **User Interface** – Clean UI with usability testing and responsive design.  
 - **Data Privacy** – Secure handling with Node.js and user-controlled entries.  
 
